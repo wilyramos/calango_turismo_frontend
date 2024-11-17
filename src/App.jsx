@@ -9,6 +9,7 @@ import Recomendations from "./pages/Recomendations"
 import Registrar from "./pages/Registrar"
 import OlvidePassword from "./pages/OlvidePassword"
 import ConfirmarCuenta from "./pages/ConfirmarCuenta"
+import NuevoPassword from "./pages/NuevoPassword"
 
 
 
@@ -24,8 +25,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registrar" element={ <Registrar />} />
           <Route path="/olvide-password" element= { < OlvidePassword /> } />
+          <Route path="/olvide-password/:token" element={ <NuevoPassword /> } />
           <Route path="/confirmar/:id" element={ <ConfirmarCuenta /> } />
-
 
           <Route path="/categories" element={<div>Categories</div>} />
           <Route path="/saved" element={<Recomendations />} />
