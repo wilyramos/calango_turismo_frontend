@@ -1,7 +1,5 @@
 
 
-
-
 export default function Alerta({ alerta }) {
     return (
       <>

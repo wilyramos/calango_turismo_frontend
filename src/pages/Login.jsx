@@ -1,11 +1,57 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import { useState } from 'react';
+import Alerta from '../components/Alerta';
+import clienteAxios from '../config/axios';
+
 
 export default function Login() {
+
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ alerta, setAlerta ] = useState({});
+
+  const navigate = useNavigate();
+
+  const { msg } = alerta;
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    if(email.trim() === '' || password.trim() === '') {
+      setAlerta({ tipo: 'error', msg: 'Todos los campos son obligatorios' })
+      return
+    }
+
+    if(password.length < 6) {
+      setAlerta({ tipo: 'error', msg: 'La contraseña debe tener al menos 6 caracteres' })
+      return
+    }
+
+    try {
+      const { data } = await clienteAxios.post('/api/usuarios/login', { email, password});
+
+      localStorage.setItem('token_visit_calango', data.token);
+      
+      navigate('/saved'); // Redirect to saved page
+      setAlerta({ tipo: 'success', msg: 'Inicio de sesión exitoso' }) // Show success message
+    } catch (error) {
+     setAlerta({ tipo: 'error', msg: error.response.data.msg })
+    }
+
+  }
+
   return (
     <div className="flex items-center justify-center p-6 bg-gray-100">
       <div className="max-w-sm w-full bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Login</h2>
-        <form className="space-y-4">
+        {
+          msg && <Alerta alerta={alerta}/>
+        }
+        <form 
+          onSubmit={handleSubmit}        
+          className="space-y-4"
+        >
           <div>
             <input
               type="email"
@@ -13,6 +59,8 @@ export default function Login() {
               required
               className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
               placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -22,6 +70,8 @@ export default function Login() {
               required
               className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
               placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
           </div>
           <button

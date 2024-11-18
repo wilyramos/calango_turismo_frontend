@@ -17,7 +17,7 @@ export default function Registrar() {
     interests: [],
     budget: 0
   });
-  const [alerta, setAlerta] = useState({ tipo: '', msg: '' })
+  const [alerta, setAlerta] = useState({})
 
 
   // interests array strings 

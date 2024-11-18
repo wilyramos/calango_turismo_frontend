@@ -10,6 +10,7 @@ import Registrar from "./pages/Registrar"
 import OlvidePassword from "./pages/OlvidePassword"
 import ConfirmarCuenta from "./pages/ConfirmarCuenta"
 import NuevoPassword from "./pages/NuevoPassword"
+import { AuthProvider } from "./context/authProvider"
 
 
 
@@ -17,33 +18,31 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<div>Not Found</div>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registrar" element={ <Registrar />} />
-          <Route path="/olvide-password" element= { < OlvidePassword /> } />
-          <Route path="/olvide-password/:token" element={ <NuevoPassword /> } />
-          <Route path="/confirmar/:id" element={ <ConfirmarCuenta /> } />
+        <AuthProvider >
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<div>Not Found</div>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registrar" element={<Registrar />} />
+            <Route path="/olvide-password" element={< OlvidePassword />} />
+            <Route path="/olvide-password/:token" element={<NuevoPassword />} />
+            <Route path="/confirmar/:id" element={<ConfirmarCuenta />} />
 
-          <Route path="/categories" element={<div>Categories</div>} />
-          <Route path="/saved" element={<Recomendations />} />
+            <Route path="/categories" element={<div>Categories</div>} />
+            <Route path="/saved" element={<Recomendations />} />
 
+            <Route path="/admin" element={<div>Admin Dashboard</div>}>
+              <Route path="dashboard" element={<div>Dashboard</div>} />
+            </Route>
+          </Routes>
 
-          <Route path="/admin" element={<div>Admin Dashboard</div>}>
-            <Route path="dashboard" element={<div>Dashboard</div>} />
-          </Route>
-        
-        
-        
-        </Routes>
-
-        <FooterSection />
+          <FooterSection />
+        </AuthProvider>
       </Router>
 
-      
+
 
     </div>
   )

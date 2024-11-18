@@ -7,8 +7,11 @@ import Alerta from "../components/Alerta";
 export default function NuevoPassword() {
 
     const [ password, setPassword ] = useState('');
+    const [ confirmPass, setConfirmPass ] = useState('');
     const [ alerta, setAlerta ] = useState({});
     const [ tokenValido, setTokenValido ] = useState(false);
+    const [ passwordModificado, setPasswordModificado ] = useState(false);
+
 
     const params = useParams();
     const { token } = params;
@@ -27,6 +30,34 @@ export default function NuevoPassword() {
         comprobarToken();
     }, []);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if(password.trim() === '' || confirmPass.trim() === '') {
+            setAlerta({ tipo: 'error', msg: 'Todos los campos son obligatorios' });
+            return;
+        }
+
+        if(password.length < 6) {
+            setAlerta({ tipo: 'error', msg: 'La contraseña debe tener al menos 6 caracteres' });
+            return;
+        }
+
+        if(password !== confirmPass) {
+            setAlerta({ tipo: 'error', msg: 'Las contraseñas no coinciden' });
+            return;
+        }
+
+
+        try {
+            await clienteAxios.post(`/api/usuarios/olvide-password/${token}`, { password });
+            setAlerta({ tipo: 'success', msg: 'Contraseña actualizada correctamente' });
+            setPasswordModificado(true);
+        } catch (error) {
+            setAlerta({ tipo: 'error', msg: error.response.data.msg });
+        }
+    }
+
     return (
         <>
             <div className="flex items-center justify-center p-6 bg-gray-100">
@@ -41,7 +72,11 @@ export default function NuevoPassword() {
     
                     {/* Mostrar el formulario solo si el token es válido */}
                     {tokenValido && (
-                        <form className="space-y-4">
+                        <form 
+                            className="space-y-4"
+                            onSubmit={handleSubmit}
+                        
+                        >
                             <div className="my-5">
                                 <label className="block text-sm font-medium text-gray-700 p-2">Nueva Contraseña</label>
                                 <input
@@ -52,7 +87,19 @@ export default function NuevoPassword() {
                                     placeholder="Nueva Contraseña"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                />   
+                                />
+
+                                <label className="block text-sm font-medium text-gray-700 p-2">Confirmar Contraseña</label>
+                                <input
+                                    type="password"
+                                    id="confirmPass"
+                                    required
+                                    className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+                                    placeholder="Confirmar Contraseña"
+                                    value={confirmPass}
+                                    onChange={e => setConfirmPass(e.target.value)}
+                                />
+
 
                                 <button
                                     type="submit"
@@ -64,6 +111,10 @@ export default function NuevoPassword() {
                             
                         </form>
                     )}
+
+                    { passwordModificado && 
+                        <Link to="/login" className="text-blue-600 hover:underline font-bold">Inicia Sesión</Link>
+                    }
                 </div>
             </div>
         </>
