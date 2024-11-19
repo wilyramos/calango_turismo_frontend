@@ -5,12 +5,14 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import { Routes, Route } from "react-router-dom"
 import { BrowserRouter as Router } from "react-router-dom"
+
+import { AuthProvider } from "./context/authProvider"
 import Recomendations from "./pages/Recomendations"
 import Registrar from "./pages/Registrar"
 import OlvidePassword from "./pages/OlvidePassword"
 import ConfirmarCuenta from "./pages/ConfirmarCuenta"
 import NuevoPassword from "./pages/NuevoPassword"
-import { AuthProvider } from "./context/authProvider"
+
 
 
 
@@ -30,7 +32,7 @@ export default function App() {
             <Route path="/olvide-password/:token" element={<NuevoPassword />} />
             <Route path="/confirmar/:id" element={<ConfirmarCuenta />} />
 
-            <Route path="/categories" element={<div>Categories</div>} />
+            <Route path="/categories" element={<Recomendations />} />
             <Route path="/saved" element={<Recomendations />} />
 
             <Route path="/admin" element={<div>Admin Dashboard</div>}>

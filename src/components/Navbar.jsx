@@ -1,112 +1,161 @@
-// import SocialMedia from "./SocialMedia"; // Asegúrate de tener este componente
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { 
+  FaSearch, 
+  FaUserAlt, 
+  FaMapMarkerAlt, 
+  FaCalendarAlt, 
+  FaBed, 
+  FaUtensils, 
+  FaBicycle 
+} from "react-icons/fa"; // Importar íconos
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isAtTop, setIsAtTop] = useState(true); // Controla si el usuario está en la parte superior
+  const [search, setSearch] = useState("");
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    setIsAtTop(currentScrollY === 0); // Si el scroll es 0, estamos en la parte superior
+    if (currentScrollY > lastScrollY) {
+      setIsVisible(false); // Oculta el navbar al bajar
+    } else {
+      setIsVisible(true); // Muestra el navbar al subir
+    }
+    setLastScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  const handleChanges = (e) => {
+    setSearch(e.target.value);
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // logica de búsqueda
-    console.log("Buscar:", searchQuery);
+    console.log("Buscando...", search);
   };
 
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-2xl font-bold hover:text-blue-300">
-            CalangoVisit
+    <nav
+      className={`fixed top-0 left-0 w-full z-20 transition-all duration-500 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
+      } ${isAtTop ? "bg-transparent" : "bg-white shadow-lg"}`}
+    >
+      <div className="flex justify-between items-center px-8 py-4">
+        {/* Logo */}
+        <div className="flex items-center space-x-2">
+          <FaMapMarkerAlt className={`h-6 w-6 ${isAtTop ? "text-white" : "text-green-500"}`} />
+          <Link
+            to="/"
+            className={`text-lg font-bold ${
+              isAtTop ? "text-white" : "text-green-500"
+            }`}
+          >
+            Descubre Calango
           </Link>
+        </div>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <form onSubmit={handleSearch} className="flex space-x-2">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="bg-blue-500 px-3 py-2 rounded-md hover:bg-blue-700">
-                Search
-              </button>
-            </form>
-            <Link to="/" className="hover:text-blue-300">Home</Link>
-            <Link to="/about" className="hover:text-blue-300">About</Link>
-            <Link to="/login" className="hover:text-blue-300">Login</Link>
-            <Link to="/categories" className="hover:text-blue-300">Categories</Link>
-            <Link to="/saved" className="hover:text-blue-300">My Recommendations</Link>
-          </div>
+        {/* Menú Hamburguesa */}
+        <div className="lg:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`focus:outline-none ${
+              isAtTop ? "text-white" : "text-gray-700"
+            }`}
+          >
+            <FaBicycle className="w-6 h-6" />
+          </button>
+        </div>
 
-          <div className="md:hidden flex items-center">
+        {/* Links de Navegación */}
+        <div className="hidden lg:flex space-x-6">
+          <Link
+            to="/donde-ir"
+            className={`font-medium flex items-center space-x-2 ${
+              isAtTop ? "text-white" : "text-gray-600"
+            } hover:text-green-800`}
+          >
+            <FaMapMarkerAlt />
+            <span>Dónde ir</span>
+          </Link>
+          <Link
+            to="/eventos"
+            className={`font-medium flex items-center space-x-2 ${
+              isAtTop ? "text-white" : "text-gray-600"
+            } hover:text-green-800`}
+          >
+            <FaCalendarAlt />
+            <span>Eventos</span>
+          </Link>
+          <Link
+            to="/hospedajes"
+            className={`font-medium flex items-center space-x-2 ${
+              isAtTop ? "text-white" : "text-gray-600"
+            } hover:text-green-800`}
+          >
+            <FaBed />
+            <span>Hospedajes</span>
+          </Link>
+          <Link
+            to="/restaurantes"
+            className={`font-medium flex items-center space-x-2 ${
+              isAtTop ? "text-white" : "text-gray-600"
+            } hover:text-green-800`}
+          >
+            <FaUtensils />
+            <span>Restaurantes</span>
+          </Link>
+          <Link
+            to="/actividades"
+            className={`font-medium flex items-center space-x-2 ${
+              isAtTop ? "text-white" : "text-gray-600"
+            } hover:text-green-800`}
+          >
+            <FaBicycle />
+            <span>Actividades</span>
+          </Link>
+        </div>
+
+        {/* Búsqueda e Iniciar Sesión */}
+        <div className="hidden lg:flex items-center space-x-4">
+          {/* Búsqueda */}
+          <div className="relative flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Buscar..."
+              className="bg-gray-100 px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={search}
+              onChange={handleChanges}
+            />
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none"
+              onClick={handleSearch}
+              className={`${
+                isAtTop ? "text-white" : "text-gray-600"
+              } hover:text-green-500`}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                )}
-              </svg>
+              <FaSearch className="w-5 h-5" />
             </button>
           </div>
+
+          {/* Iniciar Sesión */}
+          <Link
+            to="/login"
+            className={`flex items-center space-x-2 font-medium ${
+              isAtTop ? "text-white" : "text-gray-700"
+            } hover:text-green-800`}
+          >
+            <FaUserAlt className="w-6 h-6" />
+            <span>Iniciar Sesión</span>
+          </Link>
         </div>
       </div>
-
-      {/* Menú móvil */}
-      {isOpen && (
-        <div className="md:hidden bg-blue-700">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <form onSubmit={handleSearch} className="flex space-x-2 mb-3">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="bg-blue-500 px-3 py-2 rounded-md hover:bg-blue-700">
-                Search
-              </button>
-            </form>
-            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-800">
-              Home
-            </Link>
-            <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-800">
-              About
-            </Link>
-            <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-800">
-              Login
-            </Link>
-            <Link to="/categories" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-800">
-              Categories
-            </Link>
-            <Link to="/saved" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-800">
-              My Recommendations
-            </Link>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
