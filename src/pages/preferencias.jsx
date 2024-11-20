@@ -1,5 +1,5 @@
 
-export default function preferencias() {
+export default function Preferencias() {
   return (
     <div>preferencias</div>
   )
