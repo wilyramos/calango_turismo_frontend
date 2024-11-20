@@ -42,14 +42,18 @@ export default function HeaderCalango() {
             {sliderContent.map((item, index) => (
                 <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndex ? "opacity-100 z-0" : "opacity-0"
-                        }`}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                        index === currentIndex ? "opacity-100 z-0" : "opacity-0"
+                    }`}
                     style={{
                         backgroundImage: `url(${item.image})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
-                ></div>
+                >
+                    {/* Capa de superposición */}
+                    <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                </div>
             ))}
 
             {/* Contenido Principal */}

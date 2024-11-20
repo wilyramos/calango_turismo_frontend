@@ -138,12 +138,7 @@ export default function Recomendations() {
             {c}
           </button>
         ))}
-        <input 
-          type="number" 
-          placeholder="Max precio" 
-          className="border p-1 rounded"
-          onChange={(e) => setPrecio(Number(e.target.value))} 
-        />
+
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

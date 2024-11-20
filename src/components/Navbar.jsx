@@ -58,12 +58,11 @@ export default function Navbar() {
       >
          <div className="flex justify-between items-center px-6 py-4">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
-               <FaMapMarkerAlt className={iconColorClasses} />
-               <Link to="/" className={`text-lg font-bold ${iconColorClasses}`}>
-                  Descubre Calango
-               </Link>
-            </div>
+
+            <Link to="/" className="text-2xl font-bold -6">
+               <img src="/images/logo.svg" alt="Descubre Calango" className="w-40" />
+            </Link>
+
 
             {/* Menú Hamburguesa */}
             <div className="lg:hidden">
@@ -78,7 +77,7 @@ export default function Navbar() {
                   <FaMapMarkerAlt />
                   Dónde ir
                </Link>
-               <Link to="/actividades" className={`flex items-center ${textColorClasses}`}>
+               <Link to="/actividades-eventos" className={`flex items-center ${textColorClasses}`}>
                   <FaCalendarAlt /> 
                   Actividades y Eventos
                </Link>
@@ -144,7 +143,7 @@ export default function Navbar() {
                   Restaurantes
                </Link>
                <Link
-                  to="/actividades"
+                  to="/actividades-eventos"
                   className="block text-gray-700 hover:text-green-800 font-medium py-2"
                   onClick={() => setIsMenuOpen(false)}
                >
