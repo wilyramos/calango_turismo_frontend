@@ -126,7 +126,7 @@ export default function Recomendations() {
   );
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10">
+    <section className="max-w-6xl mx-auto px-4 py-20">
       <h2 className="text-3xl font-bold text-center mb-8">Explora Calango</h2>
       
       <div className="flex justify-center space-x-2 mb-6">

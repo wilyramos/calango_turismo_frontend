@@ -11,6 +11,8 @@ export default function Login() {
   const [ password, setPassword ] = useState('');
   const [ alerta, setAlerta ] = useState({});
 
+  const { setAuth } = useAuth();
+
   const navigate = useNavigate();
 
   const { msg } = alerta;
@@ -32,11 +34,13 @@ export default function Login() {
       const { data } = await clienteAxios.post('/api/usuarios/login', { email, password});
 
       localStorage.setItem('token_visit_calango', data.token);
+      setAuth(data);
       
       navigate('/saved'); // Redirect to saved page
       setAlerta({ tipo: 'success', msg: 'Inicio de sesión exitoso' }) // Show success message
     } catch (error) {
-     setAlerta({ tipo: 'error', msg: error.response.data.msg })
+
+      setAlerta({ tipo: 'error', msg: error.response.data.msg })
     }
 
   }

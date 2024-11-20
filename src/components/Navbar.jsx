@@ -78,9 +78,9 @@ export default function Navbar() {
                   <FaMapMarkerAlt />
                   Dónde ir
                </Link>
-               <Link to="/eventos" className={`flex items-center ${textColorClasses}`}>
+               <Link to="/actividades" className={`flex items-center ${textColorClasses}`}>
                   <FaCalendarAlt /> 
-                  Eventos
+                  Actividades y Eventos
                </Link>
                <Link to="/hospedajes" className={`flex items-center ${textColorClasses}`}>
                   <FaBed />
@@ -89,10 +89,6 @@ export default function Navbar() {
                <Link to="/restaurantes" className={`flex items-center ${textColorClasses}`}>
                   <FaUtensils />
                   Restaurantes
-               </Link>
-               <Link to="/actividades" className={`flex items-center ${textColorClasses}`}>
-                  <FaBicycle />
-                  Actividades
                </Link>
 
                {/* Búsqueda */}
@@ -109,7 +105,7 @@ export default function Navbar() {
                   </button>
                </div>
 
-               <Link to="/login" className={`flex items-center  ${textColorClasses}`}>
+               <Link to="/login" className={`flex items-center gap-2 ${textColorClasses}`}>
                   <FaUserAlt />
                   Iniciar Sesión
                </Link>
