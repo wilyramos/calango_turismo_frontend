@@ -3,7 +3,8 @@ import FooterSection from "./components/FooterSection";
 import Navbar from "./components/Navbar";
 
 // Context
-import { AuthProvider } from "./context/authProvider";
+
+import { AuthProvider } from "./context/AuthProvider";
 
 // React Router
 import { Routes, Route } from "react-router-dom";
