@@ -27,7 +27,7 @@ import ActividadesEventos from "./pages/ActividadesEventos";
 
 // Páginas de usuario logeado
 import Perfil from "./pages/Perfil";
-import Preferencias from "./pages/Preferencias";
+// import Preferencias from "./pages/Preferencias";
 import Recomendations from "./pages/Recomendations";
 
 // Páginas de administrador
@@ -65,7 +65,7 @@ export default function App() {
 
                   {/* Rutas de usuario */}
                   <Route path="/perfil" element={<Perfil />} />
-                  <Route path="/preferencias" element={<Preferencias />} />
+                  {/* <Route path="/preferencias" element={<Preferencias />} /> */}
                   <Route path="/recomendaciones" element={<Recomendations />} />
                   <Route path="/guardadas" element={<Recomendations />} />
 
