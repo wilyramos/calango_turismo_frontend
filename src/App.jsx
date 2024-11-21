@@ -35,6 +35,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminHospedajes from "./pages/admin/AdminHospedajes";
 import AdminActividadesEventos from "./pages/admin/AdminActividadesEventos";
 import AdminRestaurantes from "./pages/admin/AdminRestaurantes";
+import AdminLugares from "./pages/admin/AdminLugares";
 
 export default function App() {
    return (
@@ -74,6 +75,8 @@ export default function App() {
                      <Route path="hospedajes" element={<AdminHospedajes />} />
                      <Route path="actividades-eventos" element={<AdminActividadesEventos />} />
                      <Route path="restaurantes" element={<AdminRestaurantes />} />
+                     <Route path="lugares" element={<AdminLugares />} />
+                     
                   </Route>
 
                </Routes>

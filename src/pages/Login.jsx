@@ -35,18 +35,25 @@ export default function Login() {
 
       localStorage.setItem('token_visit_calango', data.token);
       setAuth(data);
-      
-      navigate('/saved'); // Redirect to saved page
+
+      // Redirect to user page o admin page
+
+      if(data.role === 'admin') {
+        navigate('/admin/dashboard'); // Redirect to admin page
+        return
+      } else {
+        navigate('/perfil'); // Redirect to user page
+      }
+
       setAlerta({ tipo: 'success', msg: 'Inicio de sesión exitoso' }) // Show success message
     } catch (error) {
-
       setAlerta({ tipo: 'error', msg: error.response.data.msg })
     }
 
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 p-16">
+    <div className="flex items-center justify-center bg-gray-100 p-24">
       <div className="max-w-sm w-full bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Login</h2>
         {
