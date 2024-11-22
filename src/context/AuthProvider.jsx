@@ -5,15 +5,16 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
-    const [ cargando, setCargando ] = useState(true);
+    const [cargando, setCargando] = useState(true);
     const [auth, setAuth] = useState({});
 
     useEffect(() => {
         const autenticarUsuario = async () => {
             const token = localStorage.getItem('token_visit_calango');
 
-            if(!token) {
+            if (!token) {
                 setCargando(false);
+                setAuth({}); // Si no hay token, limpiar el state de auth
                 return;
             }
             const config = {
@@ -23,15 +24,21 @@ const AuthProvider = ({ children }) => {
                 }
             }
 
+            // console.log("Token enviado:", token); // Enviar el token al backend para verificar la autenticación
+
             try {
+                // console.log("Enviando petición al backend para autenticar...");
                 const { data } = await clienteAxios('/api/usuarios/perfil', config);
+                // console.log("Respuesta del backend:", data); // Log de la respuesta
+
 
                 setAuth(data); // Poner el usuario en el state de auth
             } catch (error) {
-                console.log(error.response.data.msg);
+                console.error("Error al autenticar:", error.response?.data?.msg || error.message);
                 setAuth({}); // Si hay un error, limpiar el state de auth
+            } finally {
+                setCargando(false);
             }
-            setCargando(false); 
         }
         autenticarUsuario();
     }, []);
@@ -43,9 +50,9 @@ const AuthProvider = ({ children }) => {
 
     const actualizarPerfil = async datos => {
         const token = localStorage.getItem('token_visit_calango');
-        if(!token){
+        if (!token) {
             setCargando(false);
-            return;           
+            return;
         }
 
         const config = {
@@ -67,13 +74,7 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    const esAdmin = () => {
-        return auth.role === 'admin';
-    }
-
-
-    
-    return(
+    return (
         <AuthContext.Provider
             value={{
                 auth,
@@ -89,5 +90,5 @@ const AuthProvider = ({ children }) => {
 
 };
 
-export { AuthProvider}
+export { AuthProvider }
 export default AuthContext;

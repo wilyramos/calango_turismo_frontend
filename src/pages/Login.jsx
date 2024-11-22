@@ -36,10 +36,12 @@ export default function Login() {
       localStorage.setItem('token_visit_calango', data.token);
       setAuth(data);
 
+      console.log("desde el login", data)
+
       // Redirect to user page o admin page
 
       if(data.role === 'admin') {
-        navigate('/admin/dashboard'); // Redirect to admin page
+        navigate('/admin'); // Redirect to admin page
         return
       } else {
         navigate('/perfil'); // Redirect to user page
