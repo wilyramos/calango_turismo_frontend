@@ -1,6 +1,20 @@
-
+import { useEffect, useState } from 'react';
 
 export default function Alerta({ alerta }) {
+
+    const [ alertaVisible, setAlertaVisible ] = useState(false)    
+
+    useEffect(() => {
+        if(alerta.tipo){
+            setAlertaVisible(true)
+            setTimeout(() => {
+                setAlertaVisible(false)
+            }, 4000)
+        }
+    }, [alerta])
+
+    if(!alertaVisible) return null
+
     return (
       <>
           {alerta.tipo && (
