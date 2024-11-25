@@ -80,6 +80,7 @@ export default function FormularioPlace() {
 
         // Crear el JSON con los datos estructurados
         const dataToSend = {
+            _id: place?._id || undefined,
             name,
             description,
             location: {
@@ -305,7 +306,7 @@ export default function FormularioPlace() {
                             type="submit"
                             className="w-max bg-green-500 text-white font-bold uppercase text-sm rounded-xl py-2 mt-4 p-4 hover:bg-green-600"
                         >
-                            Guardar lugar
+                            {place ? 'Actualizar lugar' : 'Guardar lugar'}
                         </button>
 
                     </div>

@@ -28,7 +28,8 @@ export const PlacesProvider = ({ children }) => {
     // guardar un lugar en la base de datos
 
     const guardarPlace = async (place) => {
-
+        console.log("Guardando place:", place); // Confirma el objeto enviado
+    
         const token = localStorage.getItem("token_visit_calango");
         const config = {
             headers: {
@@ -36,47 +37,45 @@ export const PlacesProvider = ({ children }) => {
                 Authorization: `Bearer ${token}`,
             },
         };
-
-        // edicion
-
-        if (place.id) {
+    
+        if (place._id) {
+            // Caso: Edición
             try {
-                const { data } = await clienteAxios.put(`/api/lugares/${place.id}`, place, config);
-
-                // actualizar el lugar en el state
-
-                const placesActualizados = places.map((placeState) => placeState.id === place.id ? data : placeState);
-
+                const { data } = await clienteAxios.put(`/api/lugares/${place._id}`, place, config);
+                
+                // Actualizar el lugar en el estado
+                const placesActualizados = places.map((placeState) =>
+                    placeState._id === place._id ? data : placeState
+                );
                 setPlaces(placesActualizados);
-
+    
+                console.log("Lugar editado correctamente:", data);
             } catch (error) {
-                console.log(error);
+                console.error("Error al editar el lugar:", error);
             }
         } else {
-            // nuevo lugar
+            // Caso: Nuevo lugar
             try {
                 const { data } = await clienteAxios.post("/api/lugares", place, config);
-
-                // agregar el nuevo lugar al state
+                
+                // Agregar el nuevo lugar al estado
                 setPlaces([...places, data]);
-                console.log(data);
-
+    
+                console.log("Lugar creado correctamente:", data);
             } catch (error) {
-                console.log(error);
-
+                console.error("Error al crear el lugar:", error);
             }
-
         }
-    }
+    };
 
     const setEdicionPlace = async (place) => {
+        console.log(place); // Verifica si el objeto incluye `_id`
         setPlace(place);
     }
 
     const eliminarPlace = async (id) => {
-
         const confirmar = confirm("¿Estás seguro de eliminar este lugar?");
-        if(confirmar){
+        if (confirmar) {
             try {
                 const token = localStorage.getItem("token_visit_calango");
                 const config = {
@@ -85,16 +84,21 @@ export const PlacesProvider = ({ children }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 };
-
-                const { data } = await clienteAxios.delete(`/api/lugares/${id}`, config);
-
-                const placesFiltrados = places.filter((place) => place.id !== id);
+    
+                // Llama al backend para eliminar el lugar
+                await clienteAxios.delete(`/api/lugares/${id}`, config);
+    
+                // Actualiza el estado eliminando el lugar por su _id
+                const placesFiltrados = places.filter((place) => place._id !== id);
                 setPlaces(placesFiltrados);
+    
+                console.log("Lugar eliminado correctamente");
             } catch (error) {
-                console.log(error);
+                console.error("Error al eliminar el lugar:", error);
             }
-        }        
-    }
+        }
+    };
+    
 
 
     return (
