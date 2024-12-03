@@ -87,22 +87,23 @@ export default function Registrar() {
   }
   return (
     <>
-      <div className="flex items-center justify-center p-6 bg-gray-100">
+      <div className="flex items-center justify-center p-6 bg-gray-100 min-h-screen">
         <div className="max-w-sm w-full bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-center text-blue-600 mb-4 border-x-4 p-6 border-blue-300">Crea tu cuenta</h2>
+          <h2 className="text-2xl font-bold text-center text-green-600 mb-4 border-x-4 p-6 border-green-300">
+            Crea tu cuenta
+          </h2>
           <Alerta alerta={alerta} />
-          <form className="space-y-4 " onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label className="text-gray-600 text-xs">Nombre:</label>
               <input
                 type="text"
                 id="name"
                 required
-                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2"
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-
               />
             </div>
 
@@ -112,7 +113,7 @@ export default function Registrar() {
                 type="email"
                 id="email"
                 required
-                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -124,7 +125,7 @@ export default function Registrar() {
                 type="password"
                 id="password"
                 required
-                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-green-600 focus:border-green-500 p-2"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -136,12 +137,19 @@ export default function Registrar() {
                 type="password"
                 id="confirmPassword"
                 required
-                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+                className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 p-2"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
+            <input
+              type="submit"
+              value="Registrar"
+              className="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition duration-200"
+            />
+          </form>
+            
 
             {/* Selección de intereses */}
             {/* <div className="border-x-4 p-6 border-blue-300">
@@ -209,17 +217,10 @@ export default function Registrar() {
             </div> */}
 
 
-            <input
-              type="submit"
-              value="Registrar"
-              className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition duration-200"
-
-            />
-          </form>
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-600">
               ¿Ya tienes una cuenta? {' '}
-              <Link to="/login" className="text-blue-600 hover:underline font-bold">
+              <Link to="/login" className="text-green-600 hover:underline font-bold">
                 Inicia sesión.
               </Link>
             </p>

@@ -40,14 +40,14 @@ const categories = [
 ];
 
 const recomendaciones = [
-  { titulo: 'Tour de Aventura', descripcion: 'Explora emocionantes rutas en Calango.', imagenUrl: './images/9.svg', calificacion: 4.5, categoria: 'Aventura y Naturaleza', duracion: '3h', precio: 50 },
-  { titulo: 'Experiencia Cultural', descripcion: 'Sumérgete en la historia y cultura local.', imagenUrl: './images/9.svg', calificacion: 4.7, categoria: 'Turismo Cultural e Histórico', duracion: '4h', precio: 30 },
-  { titulo: 'Caminata en la Naturaleza', descripcion: 'Descubre los paisajes naturales de Calango.', imagenUrl: './images/9.svg', calificacion: 4.8, categoria: 'Aventura y Naturaleza', duracion: '2h', precio: 20 },
-  { titulo: 'Tour Gastronómico', descripcion: 'Prueba los sabores únicos de la región.', imagenUrl: './images/9.svg', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '5h', precio: 70 },
-  { titulo: 'Cata de Manzanas', descripcion: 'Degusta las diferentes variedades de manzanas cultivadas en la región.', imagenUrl: './images/9.svg', calificacion: 4.9, categoria: 'Gastronomía Local', duracion: '2h', precio: 25 },
-  { titulo: 'Festival del Camarón', descripcion: 'Celebra el camarón con platillos típicos y actividades culturales.', imagenUrl: './images/9.svg', calificacion: 4.8, categoria: 'Gastronomía Local', duracion: '6h', precio: 40 },
+  { titulo: 'Tour de Aventura', descripcion: 'Explora emocionantes rutas en Calango.', imagenUrl: './images/cultura.jpg', calificacion: 4.5, categoria: 'Aventura y Naturaleza', duracion: '3h', precio: 50 },
+  { titulo: 'Experiencia Cultural', descripcion: 'Sumérgete en la historia y cultura local.', imagenUrl: './images/cultura.png', calificacion: 4.7, categoria: 'Turismo Cultural e Histórico', duracion: '4h', precio: 30 },
+  { titulo: 'Caminata en la Naturaleza', descripcion: 'Descubre los paisajes naturales de Calango.', imagenUrl: './images/naturaleza.png', calificacion: 4.8, categoria: 'Aventura y Naturaleza', duracion: '2h', precio: 20 },
+  { titulo: 'Tour Gastronómico', descripcion: 'Prueba los sabores únicos de la región.', imagenUrl: './images/comida.png', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '5h', precio: 70 },
+  { titulo: 'Cata de Manzanas', descripcion: 'Degusta las diferentes variedades de manzanas cultivadas en la región.', imagenUrl: './images/naturaleza.png', calificacion: 4.9, categoria: 'Gastronomía Local', duracion: '2h', precio: 25 },
+  { titulo: 'Festival del Camarón', descripcion: 'Celebra el camarón con platillos típicos y actividades culturales.', imagenUrl: './images/camaron.png', calificacion: 4.8, categoria: 'Gastronomía Local', duracion: '6h', precio: 40 },
   { titulo: 'Excursión a la Costa', descripcion: 'Visita las playas cercanas y disfruta de la pesca de camarones.', imagenUrl: './images/9.svg', calificacion: 4.7, categoria: 'Aventura y Naturaleza', duracion: '5h', precio: 60 },
-  { titulo: 'Clases de Cocina con Camarones', descripcion: 'Aprende a preparar platillos deliciosos con camarones frescos.', imagenUrl: './images/9.svg', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '3h', precio: 35 },
+  { titulo: 'Clases de Cocina con Camarones', descripcion: 'Aprende a preparar platillos deliciosos con camarones frescos.', imagenUrl: './images/comida.jpg', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '3h', precio: 35 },
 ];
 
 const categorias = ['Todas', ...categories.map(c => c.title)];
@@ -76,7 +76,7 @@ export default function Recomendations() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold text-center mb-6">Explora Calango</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">Tus recomendaciones</h2>
 
       <div className="flex flex-wrap justify-center gap-2 mb-6">
         {categorias.map(c => (

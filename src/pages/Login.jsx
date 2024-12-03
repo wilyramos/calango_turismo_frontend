@@ -4,73 +4,58 @@ import { useState } from 'react';
 import Alerta from '../components/Alerta';
 import clienteAxios from '../config/axios';
 
-
 export default function Login() {
-
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ alerta, setAlerta ] = useState({});
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [alerta, setAlerta] = useState({});
   const { setAuth } = useAuth();
-
   const navigate = useNavigate();
-
   const { msg } = alerta;
 
   const handleSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if(email.trim() === '' || password.trim() === '') {
-      setAlerta({ tipo: 'error', msg: 'Todos los campos son obligatorios' })
-      return
+    if (email.trim() === '' || password.trim() === '') {
+      setAlerta({ tipo: 'error', msg: 'Todos los campos son obligatorios' });
+      return;
     }
 
-    if(password.length < 6) {
-      setAlerta({ tipo: 'error', msg: 'La contraseña debe tener al menos 6 caracteres' })
-      return
+    if (password.length < 6) {
+      setAlerta({ tipo: 'error', msg: 'La contraseña debe tener al menos 6 caracteres' });
+      return;
     }
 
     try {
-      const { data } = await clienteAxios.post('/api/usuarios/login', { email, password});
+      const { data } = await clienteAxios.post('/api/usuarios/login', { email, password });
 
       localStorage.setItem('token_visit_calango', data.token);
       setAuth(data);
 
-      console.log("desde el login", data)
-
-      // Redirect to user page o admin page
-
-      if(data.role === 'admin') {
-        navigate('/admin'); // Redirect to admin page
-        return
+      if (data.role === 'admin') {
+        navigate('/admin/lugares');
+        return;
       } else {
-        navigate('/perfil'); // Redirect to user page
+        navigate('/');
       }
 
-      setAlerta({ tipo: 'success', msg: 'Inicio de sesión exitoso' }) // Show success message
+      setAlerta({ tipo: 'success', msg: 'Inicio de sesión exitoso' });
     } catch (error) {
-      setAlerta({ tipo: 'error', msg: error.response.data.msg })
+      setAlerta({ tipo: 'error', msg: error.response.data.msg });
     }
-
-  }
+  };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 p-24">
-      <div className="max-w-sm w-full bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">Login</h2>
-        {
-          msg && <Alerta alerta={alerta}/>
-        }
-        <form 
-          onSubmit={handleSubmit}        
-          className="space-y-4"
-        >
+    <div className="flex items-center justify-center bg-green-100 min-h-screen">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-center text-green-600 mb-6">Iniciar sesión</h2>
+        {msg && <Alerta alerta={alerta} />}
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <input
               type="email"
               id="email"
               required
-              className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
+              className="block w-full border border-green-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 p-3"
               placeholder="Email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -81,29 +66,28 @@ export default function Login() {
               type="password"
               id="password"
               required
-              className="block w-full border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2"
-              placeholder="Password"
+              className="block w-full border border-green-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 p-3"
+              placeholder="Contraseña"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition duration-200"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200"
           >
             Iniciar sesión
           </button>
         </form>
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600">
-          ¿No tiene una cuenta? {' '}
-            <Link to="/registrar" className="text-blue-600 hover:underline font-bold">
-              Crea una.
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-700">
+            ¿No tienes una cuenta?{' '}
+            <Link to="/registrar" className="text-green-600 hover:underline font-bold">
+              Regístrate.
             </Link>
           </p>
-
-          <p className="text-sm text-gray-600 mt-2">
-            <Link to="/olvide-password" className="text-blue-600 hover:underline font-bold">
+          <p className="text-sm text-gray-700 mt-2">
+            <Link to="/olvide-password" className="text-green-600 hover:underline font-bold">
               ¿Olvidaste tu contraseña?
             </Link>
           </p>
