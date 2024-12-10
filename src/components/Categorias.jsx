@@ -8,35 +8,35 @@ export default function Categorias() {
     naturaleza: {
       descripcion: 'Explora paisajes naturales únicos como la Gruta Milagrosa y el Río de Calango, perfectos para los amantes de la naturaleza.',
       imagenes: [
-        { nombre: 'La Gruta Milagrosa', imagen: '/images/gruta_milagrosa.jpg' },
-        { nombre: 'Petroglifos de Cochineros', imagen: '/images/petroglifos_cochineros.jpg' },
-        { nombre: 'Río y Paisajes de Calango', imagen: '/images/rio_paisajes_calango.jpg' },
+        { nombre: 'La Gruta Milagrosa', imagen: '/images/comida.jpg' },
+        { nombre: 'Petroglifos de Cochineros', imagen: '/images/comida.jpg' },
+        { nombre: 'Río y Paisajes de Calango', imagen: '/images/comida.jpg' },
       ]
     },
     cultura: {
       descripcion: 'Sumérgete en la cultura local visitando lugares como la Iglesia de Calango y el Museo Comunal de la Piedra Coyllur Sayana.',
       imagenes: [
         { nombre: 'Iglesia de Calango', imagen: '/images/iglesia_calango.jpg' },
-        { nombre: 'Museo Comunal de la Piedra Coyllur Sayana', imagen: '/images/museo_comunal.jpg' },
+        { nombre: 'Museo Comunal de la Piedra Coyllur Sayana', imagen: '/images/comida.jpg' },
         { nombre: 'Casona de Tutumo', imagen: '/images/casona_tutumo.jpg' },
       ]
     },
     historia: {
       descripcion: 'Descubre la historia antigua de la región con visitas a lugares arqueológicos como las Zonas Arqueológicas de Aymará y Cochahuasi.',
       imagenes: [
-        { nombre: 'Aymará', imagen: '/images/aymara.jpg' },
-        { nombre: 'Checas Alto', imagen: '/images/checas_alto.jpg' },
-        { nombre: 'Hualina', imagen: '/images/hualina.jpg' },
-        { nombre: 'Minay', imagen: '/images/minay.jpg' },
-        { nombre: 'Cochahuasi', imagen: '/images/cochahuasi.jpg' },
+        { nombre: 'Aymará', imagen: '/images/comida.jpg' },
+        { nombre: 'Checas Alto', imagen: '/images/comida.jpg' },
+        { nombre: 'Hualina', imagen: '/images/comida.jpg' },
+        { nombre: 'Minay', imagen: '/images/comida.jpg' },
+        { nombre: 'Cochahuasi', imagen: '/images/comida.jpg' },
       ]
     },
     aventuras: {
       descripcion: 'Vive una aventura inolvidable con rutas como la Ruta San Juan de Correviento o la Ruta Minay-San Juan de Checas.',
       imagenes: [
-        { nombre: 'Ruta San Juan de Correviento', imagen: '/images/ruta_san_juan.jpg' },
-        { nombre: 'Ruta Minay - San Juan de Checas', imagen: '/images/ruta_minay_checas.jpg' },
-        { nombre: 'Ruta Calango - La Vuelta Yuncavirí', imagen: '/images/ruta_calango_yuncaviri.jpg' },
+        { nombre: 'Ruta San Juan de Correviento', imagen: '/images/comida.jpg' },
+        { nombre: 'Ruta Minay - San Juan de Checas', imagen: '/images/comida.jpg' },
+        { nombre: 'Ruta Calango - La Vuelta Yuncavirí', imagen: '/images/comida.jpg' },
       ]
     },
   };
