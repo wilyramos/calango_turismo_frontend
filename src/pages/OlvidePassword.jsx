@@ -19,10 +19,10 @@ export default function OlvidePassword() {
     }
 
     try {
-      await clienteAxios.post('/api/usuarios/olvide-password', { email });
-      setAlerta({ tipo: 'success', msg: "Hemos enviado las intrucciones a tu email" });
-    } catch (error) {
-      setAlerta({ tipo: 'error', msg: error.response.data.msg });
+          await clienteAxios.post('/api/usuarios/olvide-password', { email });
+          setAlerta({ tipo: 'success', msg: "Hemos enviado las intrucciones a tu email" });
+      } catch (error) {
+          setAlerta({ tipo: 'error', msg: error.response.data.msg });
     }
   }
 

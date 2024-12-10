@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import Alerta from "../Alerta";
 import usePlaces from "../../hooks/usePlaces";
-import formatLocation from "../../utils/formatLocation";
-
 
 export default function FormularioPlace() {
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState({
@@ -19,16 +16,35 @@ export default function FormularioPlace() {
     const [priceRange, setPriceRange] = useState('');
     const [rating, setRating] = useState(0);
     const [reviews, setReviews] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
+    const [images, setImages] = useState([]); // Imágenes seleccionadas
     const [activities, setActivities] = useState([]);
     const [popularityScore, setPopularityScore] = useState(0);
 
-    const { place, guardarPlace } = usePlaces();
+    const { place, guardarPlace, uploadImages } = usePlaces();
 
     const [alerta, setAlerta] = useState({});
 
-    // manejo de location
+    useEffect(() => {
+        if (place?.name) {
+            setName(place.name);
+            setDescription(place.description);
+            setLocation(place.location);
+            setCategory(place.category);
+            setPriceRange(place.priceRange);
+            setRating(place.rating);
+            setActivities(place.activities);
+            setPopularityScore(place.popularityScore);
+        }
+    }, [place]);
 
+    // manejo de la seleccion de images
+
+    const handleImageChange = (e) => {
+        const selectedImages = Array.from(e.target.files);
+        setImages(selectedImages);
+    };
+
+    // Manejo de ubicación
     const handleLocationChange = (e) => {
         const { name, value } = e.target;
         if (name === 'address') {
@@ -47,27 +63,11 @@ export default function FormularioPlace() {
         }
     };
 
-    useEffect(() => {
+    // Manejo de imágenes
 
-        if (place?.name) {
-            setName(place.name);
-            setDescription(place.description);
-            setLocation(place.location);
-            setCategory(place.category);
-            setPriceRange(place.priceRange);
-            setRating(place.rating);
-            setReviews(place.reviews);
-            setImageUrls(place.imageUrls);
-            setActivities(place.activities);
-            setPopularityScore(place.popularityScore);
-        }
-
-    }, [place]);
-
-    const handleSubmit = (e) => {
+    // Función para manejar el envío del formulario
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log("Enviando el formulario...");
 
         // Validar campos obligatorios
         if (name.trim() === '' || description.trim() === '') {
@@ -93,31 +93,52 @@ export default function FormularioPlace() {
             category,
             priceRange,
             rating: parseFloat(rating) || 0,
-            // reviews,
-            imageUrls,
-            // activities,
+            activities,
             popularityScore: parseFloat(popularityScore) || 0,
         };
 
-        console.log("Datos enviados al backend:", dataToSend);
+        try {
+            // Guardar el lugar
+            const savedPlace = await guardarPlace(dataToSend);
 
-        // Enviar los datos al backend usando la función guardarPlace
-        guardarPlace(dataToSend);
+            // Si el lugar se guardó correctamente y tenemos imágenes
+            if (savedPlace._id && images.length > 0) {
+                // Crear FormData para subir las imágenes
+                const formData = new FormData();
+                images.forEach((image) => {
+                    formData.append('file', image); // 'file' debe coincidir con el nombre del campo que espera el backend
+                });
 
-        setAlerta({
-            msg: 'El lugar se ha guardado correctamente',
-            tipo: 'success',
-        });
+                // Subir las imágenes al servidor
+                const { imageUrls } = await uploadImages(savedPlace._id, formData);
+                console.log("URLs de las imágenes subidas:", imageUrls);
 
-        // Reiniciar el formulario
-        setName('');
-        setDescription('');
-        setLocation({ address: '', coordinates: { lat: '', lon: '' } });
-        setCategory('');
-        setPriceRange('');
-        setRating(0);
-        setPopularityScore(0);
+                // Actualizar las imágenes en el lugar con las URLs
+                savedPlace.images = imageUrls;
+            } else {
+                console.log("No se subieron imágenes");
+            }
+
+            // Reiniciar el formulario
+            setName('');
+            setDescription('');
+            setLocation({ address: '', coordinates: { lat: '', lon: '' } });
+            setCategory('');
+            setPriceRange('');
+            setRating(0);
+            setPopularityScore(0);
+            setImages([]); // Limpiar las imágenes
+
+        } catch (error) {
+            console.error("Error al guardar el lugar o subir imágenes:", error);
+            setAlerta({
+                msg: 'Ocurrió un error al guardar el lugar o las imágenes',
+                tipo: 'error',
+            });
+        }
     };
+
+
 
     return (
         <>
@@ -205,9 +226,8 @@ export default function FormularioPlace() {
                                 <option value="">-- Seleccione --</option>
                                 <option value="Nature">Naturaleza</option>
                                 <option value="Culture">Cultural</option>
-                                <option value="Recreational">Recreacional</option>
                                 <option value="Historical">Historico</option>
-                                <option value="Urban">Urbano</option>
+                                <option value="Aventura">Aventura</option>
                             </select>
                         </div>
 
@@ -262,16 +282,18 @@ export default function FormularioPlace() {
                     </div>
 
                     <div className="flex flex-col">
-                        <label htmlFor="imageUrls" className=" text-gray-500  md:mb-0 pr-4 text-sm">
-                            Image Urls:
+                        <label htmlFor="images" className=" text-gray-500  md:mb-0 pr-4 text-sm">
+                            Imagenes:
                         </label>
                         <input
-                            type="text"
-                            id="imageUrls"
-                            className="border-2 rounded-xl border-gray-200   py-1 text-gray-700 p-2"
-                            value={imageUrls}
-                            onChange={e => setImageUrls(e.target.value)}
+                            id="images"
+                            type="file"
+                            className="border-2 rounded-xl border-gray-200 py-1 text-gray-700 p-2"
+                            accept="image/*"
+                            multiple
+                            onChange={handleImageChange}
                         />
+
                     </div>
 
                     <div className="flex flex-col">

@@ -57,11 +57,13 @@ export const PlacesProvider = ({ children }) => {
             // Caso: Nuevo lugar
             try {
                 const { data } = await clienteAxios.post("/api/lugares", place, config);
+
                 
                 // Agregar el nuevo lugar al estado
                 setPlaces([...places, data]);
     
                 console.log("Lugar creado correctamente:", data);
+                return data;
             } catch (error) {
                 console.error("Error al crear el lugar:", error);
             }
@@ -98,6 +100,35 @@ export const PlacesProvider = ({ children }) => {
             }
         }
     };
+
+    // subir imágenes al servidor
+
+    const uploadImages = async (idPlace, images) => {
+        try {
+            const token = localStorage.getItem("token_visit_calango");
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            const formData = new FormData();
+            images.forEach((image) => {
+                formData.append("images", image);
+            });
+
+            // peticion
+            const { data } = await clienteAxios.post(`/api/lugares/${idPlace}/images`, formData, config);
+            console.log(data);
+            return data.images;
+
+        } catch (error) {
+            console.error("Error al subir las imágenes:", error);
+            throw error; // Lanza el error para ser manejado en el frontend
+        }
+    }
+
     
 
 
@@ -107,7 +138,8 @@ export const PlacesProvider = ({ children }) => {
             place, 
             guardarPlace, 
             setEdicionPlace,
-            eliminarPlace
+            eliminarPlace,
+            uploadImages
         }}>
             {children}
         </PlacesContext.Provider>

@@ -31,7 +31,6 @@ const AuthProvider = ({ children }) => {
                 const { data } = await clienteAxios('/api/usuarios/perfil', config);
                 // console.log("Respuesta del backend:", data); // Log de la respuesta
 
-
                 setAuth(data); // Poner el usuario en el state de auth
             } catch (error) {
                 console.error("Error al autenticar:", error.response?.data?.msg || error.message);
