@@ -13,7 +13,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // Páginas principales (públicas)
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Login from "./pages/Login";
 import Registrar from "./pages/Registrar";
 import OlvidePassword from "./pages/OlvidePassword";
@@ -53,7 +52,6 @@ export default function App() {
 
                      {/* Rutas públicas */}
                      <Route path="/" element={<Home />} />
-                     <Route path="/about" element={<About />} />
                      <Route path="*" element={<div className="p-20">Not Found</div>} />
                      <Route path="/login" element={<Login />} />
                      <Route path="/registrar" element={<Registrar />} />
