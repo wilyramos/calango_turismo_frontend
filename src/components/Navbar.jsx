@@ -9,6 +9,7 @@ export default function Navbar() {
     const [isAtTop, setIsAtTop] = useState(true);
     const location = useLocation();
 
+    // Lógica para cambiar el fondo y color de texto dependiendo de la página
     const isHomePage = location.pathname === "/";
     const navbarClasses = isHomePage && isAtTop ? "bg-transparent" : "bg-white shadow-lg";
     const textColorClasses = isHomePage && isAtTop ? "text-white" : "text-gray-600";
@@ -16,20 +17,19 @@ export default function Navbar() {
     // Manejo del scroll
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
-        setIsAtTop(currentScrollY === 0);
-        setIsVisible(currentScrollY <= lastScrollY);
-        setLastScrollY(currentScrollY);
+        setIsAtTop(currentScrollY === 0);  // Detectar si estamos en la parte superior de la página
+        setIsVisible(currentScrollY <= lastScrollY);  // Ocultar navbar al bajar y mostrar al subir
+        setLastScrollY(currentScrollY);  // Actualizar la última posición del scroll
     };
 
+    // Añadir el event listener para el scroll
     useEffect(() => {
-        if (isHomePage) {
-            window.addEventListener("scroll", handleScroll);
-            return () => window.removeEventListener("scroll", handleScroll);
-        }
-    }, [lastScrollY, isHomePage]);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
 
     const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
-    
+
     // Clases comunes para los enlaces
     const linkClasses = `relative flex items-center uppercase ${textColorClasses} 
         hover:after:w-full after:absolute after:left-1/2 after:bottom-0 after:w-0 
@@ -37,9 +37,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-20 transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
-            } ${navbarClasses}`}
+            className={`fixed top-0 left-0 w-full z-20 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"} ${navbarClasses}`}
         >
             <div className="flex justify-between items-center px-6 py-4">
                 {/* Logo */}

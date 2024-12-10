@@ -1,125 +1,99 @@
-import { useState, useEffect } from 'react';
-
-const categories = [
-  {
-    title: 'Aventura y Naturaleza',
-    description: 'Explora caminatas, ciclismo de montaña, y el hermoso paisaje natural de Calango.',
-    imageUrl: './images/4.svg',
-    link: '#',
-  },
-  {
-    title: 'Gastronomía Local',
-    description: 'Disfruta de los platillos y bebidas típicas de la región.',
-    imageUrl: './images/5.svg',
-    link: '#',
-  },
-  {
-    title: 'Turismo Cultural e Histórico',
-    description: 'Conoce los sitios arqueológicos y monumentos históricos de Calango.',
-    imageUrl: './images/6.svg',
-    link: '#',
-  },
-  {
-    title: 'Agroturismo',
-    description: 'Experimenta la vida rural y descubre prácticas agrícolas tradicionales.',
-    imageUrl: './images/7.svg',
-    link: '#',
-  },
-  {
-    title: 'Eco-Turismo',
-    description: 'Disfruta de actividades y recorridos para cuidar el medio ambiente.',
-    imageUrl: './images/8.svg',
-    link: '#',
-  },
-  {
-    title: 'Bienestar y Relax',
-    description: 'Encuentra paz en retiros y hospedajes en el entorno natural de Calango.',
-    imageUrl: './images/9.svg',
-    link: '#',
-  },
-];
-
-const recomendaciones = [
-  { titulo: 'Tour de Aventura', descripcion: 'Explora emocionantes rutas en Calango.', imagenUrl: './images/cultura.jpg', calificacion: 4.5, categoria: 'Aventura y Naturaleza', duracion: '3h', precio: 50 },
-  { titulo: 'Experiencia Cultural', descripcion: 'Sumérgete en la historia y cultura local.', imagenUrl: './images/cultura.png', calificacion: 4.7, categoria: 'Turismo Cultural e Histórico', duracion: '4h', precio: 30 },
-  { titulo: 'Caminata en la Naturaleza', descripcion: 'Descubre los paisajes naturales de Calango.', imagenUrl: './images/naturaleza.png', calificacion: 4.8, categoria: 'Aventura y Naturaleza', duracion: '2h', precio: 20 },
-  { titulo: 'Tour Gastronómico', descripcion: 'Prueba los sabores únicos de la región.', imagenUrl: './images/comida.png', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '5h', precio: 70 },
-  { titulo: 'Cata de Manzanas', descripcion: 'Degusta las diferentes variedades de manzanas cultivadas en la región.', imagenUrl: './images/naturaleza.png', calificacion: 4.9, categoria: 'Gastronomía Local', duracion: '2h', precio: 25 },
-  { titulo: 'Festival del Camarón', descripcion: 'Celebra el camarón con platillos típicos y actividades culturales.', imagenUrl: './images/camaron.png', calificacion: 4.8, categoria: 'Gastronomía Local', duracion: '6h', precio: 40 },
-  { titulo: 'Excursión a la Costa', descripcion: 'Visita las playas cercanas y disfruta de la pesca de camarones.', imagenUrl: './images/9.svg', calificacion: 4.7, categoria: 'Aventura y Naturaleza', duracion: '5h', precio: 60 },
-  { titulo: 'Clases de Cocina con Camarones', descripcion: 'Aprende a preparar platillos deliciosos con camarones frescos.', imagenUrl: './images/comida.jpg', calificacion: 4.6, categoria: 'Gastronomía Local', duracion: '3h', precio: 35 },
-];
-
-const categorias = ['Todas', ...categories.map(c => c.title)];
+import React, { useState } from 'react';
+import { FaMountain, FaChurch, FaHistory, FaHiking } from 'react-icons/fa';
 
 export default function Categorias() {
-  const [categoria, setCategoria] = useState('Todas');
-  const [paginaActual, setPaginaActual] = useState(1);
-  const [itemsPorPagina] = useState(3);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('naturaleza');
 
-  // Filtrado de recomendaciones según categoría seleccionada
-  const filtradas = recomendaciones.filter(
-    rec => categoria === 'Todas' || rec.categoria === categoria
-  );
-
-  // Paginación
-  const indiceInicial = (paginaActual - 1) * itemsPorPagina;
-  const indiceFinal = indiceInicial + itemsPorPagina;
-  const paginaRecomendaciones = filtradas.slice(indiceInicial, indiceFinal);
-
-  const totalPaginas = Math.ceil(filtradas.length / itemsPorPagina);
-
-  useEffect(() => {
-    setPaginaActual(1); // Resetear a la primera página al cambiar categoría
-  }, [categoria]);
+  const categorias = {
+    naturaleza: {
+      descripcion: 'Explora paisajes naturales únicos como la Gruta Milagrosa y el Río de Calango, perfectos para los amantes de la naturaleza.',
+      imagenes: [
+        { nombre: 'La Gruta Milagrosa', imagen: '/images/gruta_milagrosa.jpg' },
+        { nombre: 'Petroglifos de Cochineros', imagen: '/images/petroglifos_cochineros.jpg' },
+        { nombre: 'Río y Paisajes de Calango', imagen: '/images/rio_paisajes_calango.jpg' },
+      ]
+    },
+    cultura: {
+      descripcion: 'Sumérgete en la cultura local visitando lugares como la Iglesia de Calango y el Museo Comunal de la Piedra Coyllur Sayana.',
+      imagenes: [
+        { nombre: 'Iglesia de Calango', imagen: '/images/iglesia_calango.jpg' },
+        { nombre: 'Museo Comunal de la Piedra Coyllur Sayana', imagen: '/images/museo_comunal.jpg' },
+        { nombre: 'Casona de Tutumo', imagen: '/images/casona_tutumo.jpg' },
+      ]
+    },
+    historia: {
+      descripcion: 'Descubre la historia antigua de la región con visitas a lugares arqueológicos como las Zonas Arqueológicas de Aymará y Cochahuasi.',
+      imagenes: [
+        { nombre: 'Aymará', imagen: '/images/aymara.jpg' },
+        { nombre: 'Checas Alto', imagen: '/images/checas_alto.jpg' },
+        { nombre: 'Hualina', imagen: '/images/hualina.jpg' },
+        { nombre: 'Minay', imagen: '/images/minay.jpg' },
+        { nombre: 'Cochahuasi', imagen: '/images/cochahuasi.jpg' },
+      ]
+    },
+    aventuras: {
+      descripcion: 'Vive una aventura inolvidable con rutas como la Ruta San Juan de Correviento o la Ruta Minay-San Juan de Checas.',
+      imagenes: [
+        { nombre: 'Ruta San Juan de Correviento', imagen: '/images/ruta_san_juan.jpg' },
+        { nombre: 'Ruta Minay - San Juan de Checas', imagen: '/images/ruta_minay_checas.jpg' },
+        { nombre: 'Ruta Calango - La Vuelta Yuncavirí', imagen: '/images/ruta_calango_yuncaviri.jpg' },
+      ]
+    },
+  };
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold text-center mb-6">Tus recomendaciones</h2>
-
-      <div className="flex flex-wrap justify-center gap-2 mb-6">
-        {categorias.map(c => (
-          <button
-            key={c}
-            className={`px-4 py-2 rounded ${c === categoria ? 'bg-green-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-            onClick={() => setCategoria(c)}
-          >
-            {c}
-          </button>
-        ))}
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-semibold text-center mb-6">Categorías</h1>
+      <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <button
+          onClick={() => setCategoriaSeleccionada('naturaleza')}
+          className="bg-green-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-green-600 transition duration-200"
+        >
+          <FaMountain className="text-xl" /><span className='text-sm'>naturaleza</span>
+        </button>
+        <button
+          onClick={() => setCategoriaSeleccionada('cultura')}
+          className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-blue-600 transition duration-200"
+        >
+          <FaChurch className="text-xl" /><span className='text-sm'>cultura</span>
+        </button>
+        <button
+          onClick={() => setCategoriaSeleccionada('historia')}
+          className="bg-orange-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-orange-600 transition duration-200"
+        >
+          <FaHistory className="text-xl" /><span className='text-sm'>historia</span>
+        </button>
+        <button
+          onClick={() => setCategoriaSeleccionada('aventuras')}
+          className="bg-purple-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-purple-600 transition duration-200"
+        >
+          <FaHiking className="text-xl" /><span className='text-sm'>aventuras</span>
+        </button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {paginaRecomendaciones.map((rec, i) => (
-          <div key={i} className="bg-white p-4 rounded shadow hover:shadow-lg transition">
-            <img src={rec.imagenUrl} alt={rec.titulo} className="w-full h-40 object-cover rounded" />
-            <h3 className="mt-4 text-lg font-semibold">{rec.titulo}</h3>
-            <p className="text-gray-600">{rec.descripcion}</p>
-            <div className="text-green-700 mt-2">Calificación: {rec.calificacion}</div>
-            <div className="text-gray-500 text-sm">Duración: {rec.duracion} | Precio: ${rec.precio}</div>
+      {categoriaSeleccionada && (
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="lg:w-1/3 p-4">
+            <h2 className="text-2xl font-semibold mb-4">{categoriaSeleccionada.charAt(0).toUpperCase() + categoriaSeleccionada.slice(1)}</h2>
+            <p className="text-gray-600">{categorias[categoriaSeleccionada].descripcion}</p>
           </div>
-        ))}
-      </div>
 
-      <div className="flex justify-center items-center gap-2 mt-6">
-        <button
-          disabled={paginaActual === 1}
-          onClick={() => setPaginaActual(paginaActual - 1)}
-          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Anterior
-        </button>
-        <span>
-          Página {paginaActual} de {totalPaginas}
-        </span>
-        <button
-          disabled={paginaActual === totalPaginas}
-          onClick={() => setPaginaActual(paginaActual + 1)}
-          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Siguiente
-        </button>
-      </div>
-    </section>
+          <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categorias[categoriaSeleccionada].imagenes.map((item, index) => (
+              <div key={index} className="border rounded-lg overflow-hidden">
+                <img
+                  src={item.imagen}
+                  alt={item.nombre}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-medium">{item.nombre}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

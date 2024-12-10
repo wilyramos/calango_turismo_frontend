@@ -22,15 +22,15 @@ import NuevoPassword from "./pages/NuevoPassword";
 
 // Páginas principales de contenido
 import Explora from "./pages/Explora";
-import DondeIr from "./pages/DondeIr";
-import Hospedajes from "./pages/Hospedajes";
+import Hospedajesygastronomia from "./pages/hospedajesygastronomia";
+import Experiencias from "./pages/Experiencias";
+
 import Restaurantes from "./pages/Restaurantes";
 import ActividadesEventos from "./pages/ActividadesEventos";
 
 // Páginas de usuario logeado
 import Perfil from "./pages/Perfil";
 // import Preferencias from "./pages/Preferencias";
-import Recomendations from "./pages/Recomendations";
 
 // Páginas de administrador
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -63,7 +63,9 @@ export default function App() {
 
                      {/* Rutas de contenido principal */}
                      <Route path="/explora" element={<Explora />} />
-                     <Route path="/hospedajes" element={<Hospedajes />} />
+                     <Route path="/hospedajesygastronomia" element={<Hospedajesygastronomia />} />
+                     <Route path="/experiencias" element={<Experiencias />} />
+                     
                      <Route path="/hospedajes/:id" element={<div>Detalle Hospedaje</div>} />
                      <Route path="/restaurantes" element={<Restaurantes />} />
                      <Route path="/restaurantes/:id" element={<div>Detalle Restaurante</div>} />
@@ -73,9 +75,8 @@ export default function App() {
                      {/* Rutas de usuario */}
                      <Route path="/perfil" element={<Perfil />} />
                      {/* <Route path="/preferencias" element={<Preferencias />} /> */}
-                     <Route path="/recomendaciones" element={<Recomendations />} />
-                     <Route path="/guardadas" element={<Recomendations />} />
 
+                     
                      {/* Rutas de administrador */}
                      <Route path="/admin" element={<RutaProtegidaAdmin />}>
                         <Route path="hospedajes" element={<AdminHospedajes />} />

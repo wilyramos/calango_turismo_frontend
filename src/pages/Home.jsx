@@ -1,5 +1,6 @@
-import Categories from "../components/Categories";
 import Header from "../components/Header";
+import Categorias from "../components/Categorias";
+
 
 
 export default function Home() {
@@ -9,7 +10,7 @@ export default function Home() {
             <div className="mx-auto px-2 p-16">
                 <h2 className="text-3xl font-bold text-center text-green-600">Encuentra tu siguiente aventura</h2>
                 <p className="mt-4 text-gray-700 text-center">Descubre un turismo personalizado recomendado para ti.</p>
-                <Categories />
+                <Categorias />
             </div>
         </>
     );
