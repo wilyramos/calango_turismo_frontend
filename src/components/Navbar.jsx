@@ -1,177 +1,85 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {
-   FaSearch,
-   FaUserAlt,
-   FaMapMarkerAlt,
-   FaCalendarAlt,
-   FaBed,
-   FaUtensils,
-   FaBicycle,
-   FaBars,
-   FaTimes,
-} from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 export default function Navbar() {
-   const [isVisible, setIsVisible] = useState(true);
-   const [isMenuOpen, setIsMenuOpen] = useState(false);
-   const [lastScrollY, setLastScrollY] = useState(0);
-   const [isAtTop, setIsAtTop] = useState(true);
-   const [search, setSearch] = useState("");
-   const location = useLocation();
+    const [isVisible, setIsVisible] = useState(true);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [isAtTop, setIsAtTop] = useState(true);
+    const location = useLocation();
 
-   const isHomePage = location.pathname === "/";
-   const navbarClasses = isHomePage && isAtTop ? "bg-transparent" : "bg-white shadow-lg";
-   const textColorClasses = isHomePage && isAtTop ? "text-white" : "text-gray-600";
-   const iconColorClasses = isHomePage && isAtTop ? "text-white" : "text-green-500";
+    const isHomePage = location.pathname === "/";
+    const navbarClasses = isHomePage && isAtTop ? "bg-transparent" : "bg-white shadow-lg";
+    const textColorClasses = isHomePage && isAtTop ? "text-white" : "text-gray-600";
+    
+    // Manejo del scroll
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        setIsAtTop(currentScrollY === 0);
+        setIsVisible(currentScrollY <= lastScrollY);
+        setLastScrollY(currentScrollY);
+    };
 
-   const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsAtTop(currentScrollY === 0);
-      if (currentScrollY > lastScrollY) {
-         setIsVisible(false);
-      } else {
-         setIsVisible(true);
-      }
-      setLastScrollY(currentScrollY);
-   };
+    useEffect(() => {
+        if (isHomePage) {
+            window.addEventListener("scroll", handleScroll);
+            return () => window.removeEventListener("scroll", handleScroll);
+        }
+    }, [lastScrollY, isHomePage]);
 
-   useEffect(() => {
-      if (isHomePage) {
-         window.addEventListener("scroll", handleScroll);
-         return () => window.removeEventListener("scroll", handleScroll);
-      }
-   }, [lastScrollY, isHomePage]);
+    const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+    
+    // Clases comunes para los enlaces
+    const linkClasses = `relative flex items-center uppercase ${textColorClasses} 
+        hover:after:w-full after:absolute after:left-1/2 after:bottom-0 after:w-0 
+        after:h-[2px] after:bg-gray-400 after:transition-all hover:after:left-0`;
 
-   const handleChanges = (e) => setSearch(e.target.value);
+    return (
+        <nav
+            className={`fixed top-0 left-0 w-full z-20 transition-all duration-500 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
+            } ${navbarClasses}`}
+        >
+            <div className="flex justify-between items-center px-6 py-4">
+                {/* Logo */}
+                <Link to="/" className="text-2xl font-bold">
+                    <img src="/images/logo.svg" alt="Descubre Calango" className="w-40" />
+                </Link>
 
-   const handleSearch = (e) => {
-      e.preventDefault();
-      console.log("Buscando...", search);
-   };
+                {/* Menú Hamburguesa */}
+                <div className="lg:hidden">
+                    <button
+                        onClick={handleMenuToggle}
+                        className={`focus:outline-none ${textColorClasses}`}
+                    >
+                        {isMenuOpen ? "✖" : "☰"}
+                    </button>
+                </div>
 
-   return (
-      <nav
-         className={`fixed top-0 left-0 w-full z-20 transition-all duration-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
-         } ${navbarClasses}`}
-      >
-         <div className="flex justify-between items-center px-6 py-4">
-            {/* Logo */}
-
-            <Link to="/" className="text-2xl font-bold -6">
-               <img src="/images/logo.svg" alt="Descubre Calango" className="w-40" />
-            </Link>
-
-
-            {/* Menú Hamburguesa */}
-            <div className="lg:hidden">
-               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className={textColorClasses}>
-                  {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
-               </button>
+                {/* Links de Navegación */}
+                <div className="hidden lg:flex space-x-4">
+                    <Link to="/explora" className={linkClasses}>Explora</Link>
+                    <Link to="/experiencias" className={linkClasses}>Experiencias</Link>
+                    <Link to="/hospedajesygastronomia" className={linkClasses}>Hospedaje y Gastronomía</Link>
+                    <Link to="/planifica" className={linkClasses}>Planifica tu viaje</Link>
+                    <Link to="/contacto" className={linkClasses}>Contacto</Link>
+                    <Link to="/login" className={`flex items-center gap-2 ${textColorClasses}`}>
+                        <FaUser />
+                    </Link>
+                </div>
             </div>
 
-            {/* Links de Navegación */}
-            <div className="hidden lg:flex space-x-4">
-               <Link to="/donde-ir" className={`flex items-center ${textColorClasses}`}>
-                  <FaMapMarkerAlt />
-                  Dónde ir
-               </Link>
-               <Link to="/actividades-eventos" className={`flex items-center ${textColorClasses}`}>
-                  <FaCalendarAlt /> 
-                  Actividades y Eventos
-               </Link>
-               <Link to="/hospedajes" className={`flex items-center ${textColorClasses}`}>
-                  <FaBed />
-                  Hospedajes
-               </Link>
-               <Link to="/restaurantes" className={`flex items-center ${textColorClasses}`}>
-                  <FaUtensils />
-                  Restaurantes
-               </Link>
-
-               {/* Búsqueda */}
-               <div className="relative flex items-center">
-                  <input
-                     type="text"
-                     placeholder="Buscar..."
-                     className="bg-gray-100 px-3 py-1 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
-                     value={search}
-                     onChange={handleChanges}
-                  />
-                  <button onClick={handleSearch} className={textColorClasses}>
-                     <FaSearch className="w-5 h-5" />
-                  </button>
-               </div>
-
-               <Link to="/login" className={`flex items-center gap-2 ${textColorClasses}`}>
-                  <FaUserAlt />
-                  Iniciar Sesión
-               </Link>
-            </div>
-         </div>
-
-         {/* Menú Desplegable para Móviles */}
-         {isMenuOpen && (
-            <div className="absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 z-10">
-               <Link
-                  to="/donde-ir"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Dónde ir
-               </Link>
-               <Link
-                  to="/eventos"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Eventos
-               </Link>
-               <Link
-                  to="/hospedajes"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Hospedajes
-               </Link>
-               <Link
-                  to="/restaurantes"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Restaurantes
-               </Link>
-               <Link
-                  to="/actividades-eventos"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Actividades
-               </Link>
-               <Link
-                  to="/login"
-                  className="block text-gray-700 hover:text-green-800 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-               >
-                  Iniciar Sesión
-               </Link>
-
-               {/* Búsqueda en el Menú Móvil */}
-               <div className="flex items-center mt-4">
-                  <input
-                     type="text"
-                     placeholder="Buscar..."
-                     className="w-full bg-gray-100 px-3 py-1 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
-                     value={search}
-                     onChange={handleChanges}
-                  />
-                  <button onClick={handleSearch} className="text-gray-600">
-                     <FaSearch className="w-5 h-5" />
-                  </button>
-               </div>
-            </div>
-         )}
-      </nav>
-   );
+            {/* Menú Desplegable para Móviles */}
+            {isMenuOpen && (
+                <div className="absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 z-10">
+                    <Link to="/explora" className="block py-2 text-lg font-semibold text-gray-600">Explora</Link>
+                    <Link to="/experiencias" className="block py-2 text-lg font-semibold text-gray-600">Experiencias</Link>
+                    <Link to="/hospedajesygastronomia" className="block py-2 text-lg font-semibold text-gray-600">Hospedaje y Gastronomía</Link>
+                    <Link to="/planifica" className="block py-2 text-lg font-semibold text-gray-600">Planifica tu viaje</Link>
+                    <Link to="/contacto" className="block py-2 text-lg font-semibold text-gray-600">Contacto</Link>
+                </div>
+            )}
+        </nav>
+    );
 }

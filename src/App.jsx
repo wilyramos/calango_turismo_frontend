@@ -21,6 +21,7 @@ import ConfirmarCuenta from "./pages/ConfirmarCuenta";
 import NuevoPassword from "./pages/NuevoPassword";
 
 // Páginas principales de contenido
+import Explora from "./pages/Explora";
 import DondeIr from "./pages/DondeIr";
 import Hospedajes from "./pages/Hospedajes";
 import Restaurantes from "./pages/Restaurantes";
@@ -61,7 +62,7 @@ export default function App() {
                      <Route path="/confirmar/:id" element={<ConfirmarCuenta />} />
 
                      {/* Rutas de contenido principal */}
-                     <Route path="/donde-ir" element={<DondeIr />} />
+                     <Route path="/explora" element={<Explora />} />
                      <Route path="/hospedajes" element={<Hospedajes />} />
                      <Route path="/hospedajes/:id" element={<div>Detalle Hospedaje</div>} />
                      <Route path="/restaurantes" element={<Restaurantes />} />
