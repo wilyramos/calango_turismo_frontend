@@ -21,7 +21,7 @@ import NuevoPassword from "./pages/NuevoPassword";
 
 // Páginas principales de contenido
 import Explora from "./pages/Explora";
-import Hospedajesygastronomia from "./pages/hospedajesygastronomia";
+import Hospedajesygastronomia from "./pages/Hospedajesygastronomia";
 import Experiencias from "./pages/Experiencias";
 
 import Restaurantes from "./pages/Restaurantes";
