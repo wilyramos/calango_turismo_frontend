@@ -20,7 +20,7 @@ export default function Header() {
                         Descubre <span className="text-green-400">Calango</span>
                     </h1>
                     <p className="text-base sm:text-lg">
-                        Naturaleza, historia y gastronomía en la provincia de Cañete.
+                        Naturaleza, historia y gastronomía ubicado en la provincia de Cañete.
                     </p>
                     <Link
                         to="/explora"
