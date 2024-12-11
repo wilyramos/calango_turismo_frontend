@@ -1,99 +1,102 @@
-import React, { useState } from 'react';
-import { FaMountain, FaChurch, FaHistory, FaHiking } from 'react-icons/fa';
+import { useState } from "react";
+import { FaMapMarkerAlt, FaStar, FaLeaf, FaTree, FaLandmark, FaRoute, FaGlobe } from "react-icons/fa";
+import usePlaces from "../hooks/usePlaces";
 
 export default function Categorias() {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('naturaleza');
+	const { places } = usePlaces();
 
-  const categorias = {
-    naturaleza: {
-      descripcion: 'Explora paisajes naturales únicos como la Gruta Milagrosa y el Río de Calango, perfectos para los amantes de la naturaleza.',
-      imagenes: [
-        { nombre: 'La Gruta Milagrosa', imagen: '/images/comida.jpg' },
-        { nombre: 'Petroglifos de Cochineros', imagen: '/images/comida.jpg' },
-        { nombre: 'Río y Paisajes de Calango', imagen: '/images/comida.jpg' },
-      ]
-    },
-    cultura: {
-      descripcion: 'Sumérgete en la cultura local visitando lugares como la Iglesia de Calango y el Museo Comunal de la Piedra Coyllur Sayana.',
-      imagenes: [
-        { nombre: 'Iglesia de Calango', imagen: '/images/iglesia_calango.jpg' },
-        { nombre: 'Museo Comunal de la Piedra Coyllur Sayana', imagen: '/images/comida.jpg' },
-        { nombre: 'Casona de Tutumo', imagen: '/images/casona_tutumo.jpg' },
-      ]
-    },
-    historia: {
-      descripcion: 'Descubre la historia antigua de la región con visitas a lugares arqueológicos como las Zonas Arqueológicas de Aymará y Cochahuasi.',
-      imagenes: [
-        { nombre: 'Aymará', imagen: '/images/comida.jpg' },
-        { nombre: 'Checas Alto', imagen: '/images/comida.jpg' },
-        { nombre: 'Hualina', imagen: '/images/comida.jpg' },
-        { nombre: 'Minay', imagen: '/images/comida.jpg' },
-        { nombre: 'Cochahuasi', imagen: '/images/comida.jpg' },
-      ]
-    },
-    aventuras: {
-      descripcion: 'Vive una aventura inolvidable con rutas como la Ruta San Juan de Correviento o la Ruta Minay-San Juan de Checas.',
-      imagenes: [
-        { nombre: 'Ruta San Juan de Correviento', imagen: '/images/comida.jpg' },
-        { nombre: 'Ruta Minay - San Juan de Checas', imagen: '/images/comida.jpg' },
-        { nombre: 'Ruta Calango - La Vuelta Yuncavirí', imagen: '/images/comida.jpg' },
-      ]
-    },
-  };
+	// Estado para manejar la categoría seleccionada
+	const [selectedCategory, setSelectedCategory] = useState("todos");
+	const [currentPage, setCurrentPage] = useState(1);
+	const placesPerPage = 3;
 
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold text-center mb-6">Categorías</h1>
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
-        <button
-          onClick={() => setCategoriaSeleccionada('naturaleza')}
-          className="bg-green-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-green-600 transition duration-200"
-        >
-          <FaMountain className="text-xl" /><span className='text-sm'>naturaleza</span>
-        </button>
-        <button
-          onClick={() => setCategoriaSeleccionada('cultura')}
-          className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-blue-600 transition duration-200"
-        >
-          <FaChurch className="text-xl" /><span className='text-sm'>cultura</span>
-        </button>
-        <button
-          onClick={() => setCategoriaSeleccionada('historia')}
-          className="bg-orange-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-orange-600 transition duration-200"
-        >
-          <FaHistory className="text-xl" /><span className='text-sm'>historia</span>
-        </button>
-        <button
-          onClick={() => setCategoriaSeleccionada('aventuras')}
-          className="bg-purple-500 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-purple-600 transition duration-200"
-        >
-          <FaHiking className="text-xl" /><span className='text-sm'>aventuras</span>
-        </button>
-      </div>
+	// Categorías disponibles
+	const categories = [
+		{ id: "Nature", label: "Naturaleza", icon: <FaTree /> },
+		{ id: "Culture", label: "Cultura", icon: <FaLandmark /> },
+		{ id: "Historical", label: "Historia", icon: <FaRoute /> },
+		{ id: "Aventura", label: "Aventuras", icon: <FaGlobe /> },
+	];
 
-      {categoriaSeleccionada && (
-        <div className="flex flex-col lg:flex-row gap-6">
-          <div className="lg:w-1/3 p-4">
-            <h2 className="text-2xl font-semibold mb-4">{categoriaSeleccionada.charAt(0).toUpperCase() + categoriaSeleccionada.slice(1)}</h2>
-            <p className="text-gray-600">{categorias[categoriaSeleccionada].descripcion}</p>
-          </div>
+	// Filtrar lugares por categoría seleccionada
+	const filteredPlaces = selectedCategory === "todos"
+		? places
+		: places.filter((place) => place.category === selectedCategory);
 
-          <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categorias[categoriaSeleccionada].imagenes.map((item, index) => (
-              <div key={index} className="border rounded-lg overflow-hidden">
-                <img
-                  src={item.imagen}
-                  alt={item.nombre}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-xl font-medium">{item.nombre}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+	// Calcular lugares a mostrar según la página actual
+	const startIndex = (currentPage - 1) * placesPerPage;
+	const endIndex = startIndex + placesPerPage;
+	const paginatedPlaces = filteredPlaces.slice(startIndex, endIndex);
+
+	// Calcular el número total de páginas
+	const totalPages = Math.ceil(filteredPlaces.length / placesPerPage);
+
+	return (
+		<div className="p-6 max-w-screen-lg mx-auto">
+			<h2 className="text-2xl font-bold mb-4 text-center">Categorías</h2>
+			<div className="flex flex-wrap justify-center gap-4 mb-6">
+				<button
+					className={`px-4 py-2 rounded-full flex items-center gap-2 ${selectedCategory === "todos" ? "bg-gray-700 text-white" : "bg-gray-300 text-gray-800"}`}
+					onClick={() => setSelectedCategory("todos")}
+				>
+					<FaGlobe /> Todos
+				</button>
+				{categories.map((cat) => (
+					<button
+						key={cat.id}
+						className={`px-4 py-2 rounded-full flex items-center gap-2 ${selectedCategory === cat.id ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-800"}`}
+						onClick={() => {
+							setSelectedCategory(cat.id);
+							setCurrentPage(1);
+						}}
+					>
+						{cat.icon} {cat.label}
+					</button>
+				))}
+			</div>
+
+			<div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+				{paginatedPlaces.map((place) => (
+					<div key={place._id} className="border rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+						{place.images && place.images.length > 0 && (
+							<img
+								src={place.images[0]}
+								alt={place.name}
+								className="w-full h-40 object-cover"
+							/>
+						)}
+						<div className="p-4">
+							<h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+								<FaLeaf className="text-green-500" /> {place.name}
+							</h3>
+							<p className="text-gray-600 text-sm flex items-center gap-2 mb-2">
+								<FaMapMarkerAlt className="text-red-500" /> {place.location?.address || "Ubicación no disponible"}
+							</p>
+							<p className="text-gray-500 text-sm flex items-center gap-2">
+								<FaStar className="text-yellow-500" /> {place.rating || "Sin calificación"}
+							</p>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<div className="flex justify-center items-center mt-6 gap-4">
+				<button
+					className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+					disabled={currentPage === 1}
+					onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+				>
+					Anterior
+				</button>
+				<span className="text-gray-700">Página {currentPage} de {totalPages}</span>
+				<button
+					className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+					disabled={currentPage === totalPages}
+					onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+				>
+					Siguiente
+				</button>
+			</div>
+		</div>
+	);
 }

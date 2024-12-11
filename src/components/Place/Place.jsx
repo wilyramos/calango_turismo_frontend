@@ -12,8 +12,6 @@ export default function Place({place}) {
         return `${location.address}, ${location.coordinates.lat}, ${location.coordinates.lon}`
     }
 
-
-
   return (
     
     <>

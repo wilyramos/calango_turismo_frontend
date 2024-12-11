@@ -23,7 +23,7 @@ export default function Header() {
                         Naturaleza, historia y gastronomía en la provincia de Cañete.
                     </p>
                     <Link
-                        to="/explorar"
+                        to="/explora"
                         className="bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600 transition"
                     >
                         Explorar

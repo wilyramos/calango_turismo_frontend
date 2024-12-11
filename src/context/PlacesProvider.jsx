@@ -129,9 +129,6 @@ export const PlacesProvider = ({ children }) => {
         }
     }
 
-    
-
-
     return (
         <PlacesContext.Provider value={{ 
             places,

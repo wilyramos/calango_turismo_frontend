@@ -1,12 +1,9 @@
 import usePlaces from "../../hooks/usePlaces"
 import Place from "./Place"
 
-
-
 export default function ListadoPlaces() {
 
     const { places } = usePlaces()
-
 
     return (
        <>
