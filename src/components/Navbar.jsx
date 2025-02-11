@@ -56,12 +56,9 @@ export default function Navbar() {
                 </div>
 
                 {/* Links de Navegación */}
-                <div className="hidden lg:flex space-x-4">
+                <div className="hidden lg:flex space-x-6 font-bold">
                     <Link to="/explora" className={linkClasses}>Explora</Link>
-                    <Link to="/experiencias" className={linkClasses}>Experiencias</Link>
-                    <Link to="/hospedajesygastronomia" className={linkClasses}>Hospedaje y Gastronomía</Link>
-                    <Link to="/planifica" className={linkClasses}>Planifica tu viaje</Link>
-                    <Link to="/contacto" className={linkClasses}>Contacto</Link>
+                    
                     <Link to="/login" className={`flex items-center gap-2 ${textColorClasses}`}>
                         <FaUser />
                     </Link>
@@ -72,10 +69,9 @@ export default function Navbar() {
             {isMenuOpen && (
                 <div className="absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 z-10">
                     <Link to="/explora" className="block py-2 text-lg font-semibold text-gray-600">Explora</Link>
-                    <Link to="/experiencias" className="block py-2 text-lg font-semibold text-gray-600">Experiencias</Link>
-                    <Link to="/hospedajesygastronomia" className="block py-2 text-lg font-semibold text-gray-600">Hospedaje y Gastronomía</Link>
-                    <Link to="/planifica" className="block py-2 text-lg font-semibold text-gray-600">Planifica tu viaje</Link>
-                    <Link to="/contacto" className="block py-2 text-lg font-semibold text-gray-600">Contacto</Link>
+                    
+                    <Link to="/login" className="block py-2 text-lg font-semibold text-gray-600">Iniciar Sesión</Link>
+
                 </div>
             )}
         </nav>
