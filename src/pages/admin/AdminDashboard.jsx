@@ -6,10 +6,7 @@ export default function AdminDashboard() {
   const location = useLocation(); // Hook para obtener la ruta actual
 
   const links = [
-    { path: "/admin/actividades-eventos", label: "Actividades y Eventos" },
-    { path: "/admin/hospedajes", label: "Hospedajes" },
     { path: "/admin/lugares", label: "Lugares" },
-    { path: "/admin/restaurantes", label: "Restaurantes" },
     { path: "/admin/usuarios", label: "Usuarios" },
   ];
 

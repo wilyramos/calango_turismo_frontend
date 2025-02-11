@@ -13,7 +13,7 @@ export default function Navbar() {
     const isHomePage = location.pathname === "/";
     const navbarClasses = isHomePage && isAtTop ? "bg-transparent" : "bg-white shadow-lg";
     const textColorClasses = isHomePage && isAtTop ? "text-white" : "text-gray-600";
-    
+
     // Manejo del scroll
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -58,7 +58,7 @@ export default function Navbar() {
                 {/* Links de Navegación */}
                 <div className="hidden lg:flex space-x-6 font-bold">
                     <Link to="/explora" className={linkClasses}>Explora</Link>
-                    
+
                     <Link to="/login" className={`flex items-center gap-2 ${textColorClasses}`}>
                         <FaUser />
                     </Link>
@@ -68,10 +68,8 @@ export default function Navbar() {
             {/* Menú Desplegable para Móviles */}
             {isMenuOpen && (
                 <div className="absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 z-10">
-                    <Link to="/explora" className="block py-2 text-lg font-semibold text-gray-600">Explora</Link>
-                    
+                    <Link to="/explora" className="block py-2 text-lg font-semibold text-gray-600">Explorar</Link>
                     <Link to="/login" className="block py-2 text-lg font-semibold text-gray-600">Iniciar Sesión</Link>
-
                 </div>
             )}
         </nav>

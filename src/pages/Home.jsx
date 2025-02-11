@@ -2,8 +2,6 @@ import Header from "../components/Header";
 import Categorias from "../components/Categorias";
 import DestinosPrincipales from "../components/DestinosPrincipales";
 
-
-
 export default function Home() {
     return (
         <>

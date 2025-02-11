@@ -27,12 +27,10 @@ import Perfil from "./pages/Perfil";
 // import Preferencias from "./pages/Preferencias";
 
 // Páginas de administrador
-import AdminDashboard from "./pages/admin/AdminDashboard";
+
 import RutaProtegidaAdmin from "./layout/RutaProtegida";
-import AdminHospedajes from "./pages/admin/AdminHospedajes";
-import AdminActividadesEventos from "./pages/admin/AdminActividadesEventos";
-import AdminRestaurantes from "./pages/admin/AdminRestaurantes";
 import AdminLugares from "./pages/admin/AdminLugares";
+import AdminUsuarios from "./pages/admin/AdminUsuarios";
 
 
 
@@ -56,9 +54,7 @@ export default function App() {
 
                      {/* Rutas de contenido principal */}
                      <Route path="/explora" element={<Explora />} />
-
-                     <Route path="/actividades-eventos/:id" element={<div>Detalle Actividad/Evento</div>} />
-
+                     
                      {/* Rutas de usuario */}
                      <Route path="/perfil" element={<Perfil />} />
                      {/* <Route path="/preferencias" element={<Preferencias />} /> */}
@@ -66,10 +62,9 @@ export default function App() {
 
                      {/* Rutas de administrador */}
                      <Route path="/admin" element={<RutaProtegidaAdmin />}>
-                        <Route path="hospedajes" element={<AdminHospedajes />} />
-                        <Route path="actividades-eventos" element={<AdminActividadesEventos />} />
-                        <Route path="restaurantes" element={<AdminRestaurantes />} />
+                        
                         <Route path="lugares" element={<AdminLugares />} />
+                        <Route path="usuarios" element={<AdminUsuarios />} />
 
                      </Route>
 

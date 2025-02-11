@@ -1,8 +1,7 @@
-import SocialMedia from "./SocialMedia";
 
 export default function FooterSection() {
    return (
-      <footer className="bg-white text-green-800 py-6 border-t border-green-300">
+      <footer className="bg-white text-green-800 py-6 border-t border-gray-300">
          <div className="container mx-auto px-4 text-center">
             {/* Logo */}
             <div className="mb-4">
@@ -15,9 +14,14 @@ export default function FooterSection() {
 
             {/* Texto y Redes */}
             <p className="text-sm mb-4">
-               © {new Date().getFullYear()} Wily Ramos. Todos los derechos reservados.
+               Powered by{" "} <a 
+                  href="https://wilyramos.github.io"
+                  target="_blank" 
+                  rel="noreferrer"  
+                  >
+                     wily ramos</a>
+               ©
             </p>
-            <SocialMedia />
          </div>
       </footer>
    );

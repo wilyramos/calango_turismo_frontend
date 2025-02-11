@@ -5,9 +5,9 @@ export default function Header() {
 
     return (
         <header
-            className="h-[60vh] flex items-center justify-center relative"
+            className="h-[50vh] flex items-center justify-center relative"
             style={{
-                backgroundImage: `url(../images/fondoPantalla.webp)`,
+                backgroundImage: `url(../images/bg.svg)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
